@@ -52,23 +52,23 @@ module xge_mac(/*AUTOARG*/
 
 /*AUTOINPUT*/
 // Beginning of automatic inputs (from unused autoinst inputs)
-input                   clk_156m25;             // To rx_dq0 of rx_dequeue.v, ...
-input                   clk_xgmii_rx;           // To rx_eq0 of rx_enqueue.v, ...
-input                   clk_xgmii_tx;           // To tx_dq0 of tx_dequeue.v, ...
+input                   clk_156m25;             // To rx_dq0 of rx_dequeue.v
+input                   clk_xgmii_rx;           // To rx_eq0 of rx_enqueue.v
+input                   clk_xgmii_tx;           // To tx_dq0 of tx_dequeue.v
 input                   pkt_rx_ren;             // To rx_dq0 of rx_dequeue.v
 input [63:0]            pkt_tx_data;            // To tx_eq0 of tx_enqueue.v
 input                   pkt_tx_eop;             // To tx_eq0 of tx_enqueue.v
 input [2:0]             pkt_tx_mod;             // To tx_eq0 of tx_enqueue.v
 input                   pkt_tx_sop;             // To tx_eq0 of tx_enqueue.v
 input                   pkt_tx_val;             // To tx_eq0 of tx_enqueue.v
-input                   reset_156m25_n;         // To rx_dq0 of rx_dequeue.v, ...
-input                   reset_xgmii_rx_n;       // To rx_eq0 of rx_enqueue.v, ...
-input                   reset_xgmii_tx_n;       // To tx_dq0 of tx_dequeue.v, ...
+input                   reset_156m25_n;         // To rx_dq0 of rx_dequeue.v
+input                   reset_xgmii_rx_n;       // To rx_eq0 of rx_enqueue.v
+input                   reset_xgmii_tx_n;       // To tx_dq0 of tx_dequeue.v
 input [7:0]             wb_adr_i;               // To wishbone_if0 of wishbone_if.v
-input                   wb_clk_i;               // To sync_clk_wb0 of sync_clk_wb.v, ...
+input                   wb_clk_i;               // To sync_clk_wb0 of sync_clk_wb.v
 input                   wb_cyc_i;               // To wishbone_if0 of wishbone_if.v
 input [31:0]            wb_dat_i;               // To wishbone_if0 of wishbone_if.v
-input                   wb_rst_i;               // To sync_clk_wb0 of sync_clk_wb.v, ...
+input                   wb_rst_i;               // To sync_clk_wb0 of sync_clk_wb.v
 input                   wb_stb_i;               // To wishbone_if0 of wishbone_if.v
 input                   wb_we_i;                // To wishbone_if0 of wishbone_if.v
 input [7:0]             xgmii_rxc;              // To rx_eq0 of rx_enqueue.v
