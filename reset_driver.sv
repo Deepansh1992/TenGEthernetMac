@@ -1,7 +1,8 @@
 `ifndef RESET_DRIVER
 `define RESET_DRIVER
 class reset_driver extends uvm_driver #(reset_sequence_item);
-    virtual pkt_interface pkt_vi; 
+    virtual pkt_interface       pkt_vi; 
+    virtual wishbone_interface  wb_vi; 
     
     function new (input string name = "reset_driver" input uvm_component parent);
         super.new(name, parent);
@@ -18,12 +19,12 @@ class reset_driver extends uvm_driver #(reset_sequence_item);
   
         forever begin
             seq_item_port.get_next_item(req);
-            `uvm_info("RESET_DRIVER run_phase()", req.sprint(), UVM_HIGH); 
-            
-            
-        end
+                `uvm_info("RESET_DRIVER run_phase()", req.sprint(), UVM_HIGH); 
+                @(pkt_vi.clk_156m25);   pkt_vi.reset_156m25_n       <=  req.reset_156m25_n; 
+                @(wb_clk_i.wb_vi);      wb_vi.wb_rst_i              <=  req.wb_rst_i;
+                @(xgmii_interface.clk_xgmii_rx).reset_xgmii_rx_n    <= req.reset_xgmii_rx_n;
+                @(xgmii_interface.clk_xgmii_tx).reset_xgmii_tx_n    <= req.reset_xgmii_tx_n;
+            seq_item_port.get_next_item(req);    
+            end
      endtask
-    
-
-
 `endif
