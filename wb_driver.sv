@@ -1,6 +1,7 @@
 `ifndef WB_DRIVER
 `define WB_DRIVER
 class wb_driver extends uvm_driver #(reset_sequence_item);
+    `uvm_object_utils(wb_driver);
     virtual wb_interface wb_vi; 
     
     function new (input string name = "wb_driver" input uvm_component parent);

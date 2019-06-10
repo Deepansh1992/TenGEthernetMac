@@ -11,9 +11,14 @@ class wb_sequence_item extends uvm_sequence_item;
     rand bit                   wb_stb_i;               // To wishbone_if0 of wishbone_if.v
     rand bit                   wb_we_i;                // To wishbone_if0 of wishbone_if.v
     
-    //  Group: Functions
-
-    //  Constructor: new
+    `uvm_object_utils_begin
+        `uvm_field_array_int    (wb_adr_i, UVM_ALL_ON);            
+        `uvm_field_int          (wb_cyc_i, UVM_ALL_ON);            
+        `uvm_field_array_int    (wb_dat_i, UVM_ALL_ON);            
+        `uvm_field_int          (wb_stb_i, UVM_ALL_ON);            
+        `uvm_field_int          (wb_we_i, UVM_ALL_ON);                  
+    `uvm_object_utils_end
+    
     function new(string name = "wb_sequence_item");
         super.new(name);
     endfunction: new

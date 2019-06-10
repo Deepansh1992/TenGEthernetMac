@@ -1,6 +1,7 @@
 `ifndef RX_DRIVER
 `define RX_DRIVER
 class rx_driver extends uvm_driver #(reset_sequence_item);
+    `uvm_object_utils(rx_driver);
     virtual pkt_interface pkt_vi; 
     
     function new (input string name = "rx_driver" input uvm_component parent);

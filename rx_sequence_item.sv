@@ -1,7 +1,6 @@
 //  Class: rx_sequence_item
 //
 class rx_sequence_item extends uvm_sequence_item;
-    typedef rx_sequence_item this_type_t;
     `uvm_object_utils(rx_sequence_item);
 
     //  Group: Variables

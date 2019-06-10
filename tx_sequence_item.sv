@@ -12,11 +12,11 @@ class tx_sequence_item extends uvm_sequence_item;
     rand bit            pkt_tx_val;    // To tx_eq0 of tx_enqueue.v
 
     `uvm_object_utils_begin(tx_sequence_item);
-        `uvm_field_array_int (pkt_tx_data, UVM_ALL_ON);
-        `uvm_field_int (pkt_tx_eop, UVM_ALL_ON);
-        `uvm_field_array_int (pkt_tx_mod, UVM_ALL_ON);
-        `uvm_field_int (pkt_tx_sop, UVM_ALL_ON);
-        `uvm_field_int (pkt_tx_val, UVM_ALL_ON);
+        `uvm_field_array_int    (pkt_tx_data, UVM_ALL_ON);
+        `uvm_field_int          (pkt_tx_eop, UVM_ALL_ON);
+        `uvm_field_array_int    (pkt_tx_mod, UVM_ALL_ON);
+        `uvm_field_int          (pkt_tx_sop, UVM_ALL_ON);
+        `uvm_field_int          (pkt_tx_val, UVM_ALL_ON);
     `uvm_object_utils_end
     
     //  Group: Functions
