@@ -25,6 +25,4 @@ class rx_sequence_item extends uvm_sequence_item;
     // extern function void do_pack();
     //  Function: do_unpack
     // extern function void do_unpack();
-
-    
 endclass: rx_sequence_item

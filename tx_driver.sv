@@ -17,7 +17,7 @@ class tx_driver extends uvm_driver #(reset_sequence_item);
     virtual task run_phase(input uvm_phase phase);
         `uvm_info("DRIVER CLASS", "HIERARCHY: %m", UVM_HIGH);
         forever begin
-            wait (pkt_vi.reset_156m25_n)           
+            wait (pkt_vi.reset_156m25_n && pkt_vi.pkt_tx_full);
             seq_item_port.get_next_item(req); 
             `uvm_info("DRIVER_CLASS run_phase()", req.sprint(), UVM_HIGH); 
             @(pkt_vi.clk_156m25) begin 
@@ -30,4 +30,5 @@ class tx_driver extends uvm_driver #(reset_sequence_item);
             seq_item_port.item_done(); 
         end
      endtask
+endclass
 `endif

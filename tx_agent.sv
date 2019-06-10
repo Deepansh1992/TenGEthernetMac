@@ -6,10 +6,13 @@ typedef	uvm_sequencer #(tx_sequence_item) tx_sequencer;
 class tx_agent extends uvm_agent;
    `uvm_component_utils(tx_agent)
     
-        tx_sequencer     tx_sqr;
-        tx_sequence      tx_seq;
-        tx_driver        tx_drv;
-        tx_monitor       tx_mon;
+        tx_monitor      tx_mon; 
+        tx_sequencer    tx_sqr;
+        tx_sequence     tx_seq;
+        tx_driver       tx_drv;
+        tx_monitor      tx_mon;
+
+        uvm_analysis_port#(tx_pkt) tx_agent_ap; 
 
     function new (string name = "tx_agent", uvm_component parent = null);
             super.new (name, parent);
@@ -24,8 +27,12 @@ class tx_agent extends uvm_agent;
     endfunction
 
    virtual function void connect_phase (uvm_phase phase);
-    if (get_is_active())
-        tx_drv.seq_item_port.connect (tx_sqr.seq_item_export);
+        super.new(phase);     
+        if (get_is_active()) begin 
+            tx_drv.seq_item_port.connect (tx_sqr.seq_item_export);
+        end 
+        
+        this.tx_agent_ap = tx_mon.tx_mon_ap; 
     endfunction
 
 endclass

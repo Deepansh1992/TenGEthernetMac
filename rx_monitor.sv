@@ -33,5 +33,4 @@ class rx_monitor extends uvm_monitor;
         end
 
     endtask: run_phase
-
-endfunction: build_phase
+endclass

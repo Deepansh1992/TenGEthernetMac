@@ -23,6 +23,5 @@ class rx_agent extends uvm_agent;
             super.connect_phase(phase);
             this.agent_ap = rx_mon.mon_ap;
         endfunction 
-
 endclass
 `endif

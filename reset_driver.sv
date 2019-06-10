@@ -1,7 +1,7 @@
 `ifndef RESET_DRIVER
 `define RESET_DRIVER
 class reset_driver extends uvm_driver #(reset_sequence_item);
-    `uvm_object_utils(reset_driver);
+    `uvm_component_utils(reset_driver);
     virtual pkt_interface       pkt_vi; 
     virtual wishbone_interface  wb_vi; 
     
@@ -43,4 +43,5 @@ class reset_driver extends uvm_driver #(reset_sequence_item);
             seq_item_port.get_next_item(req);    
             end
      endtask
+endclass
 `endif
