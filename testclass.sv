@@ -1,7 +1,17 @@
 `ifndef TESTCLASS_SV
 `define TESTCLASS_SV
 class test_base extends uvm_test;
-        environment    envil;
+      
+      reset_interface      reset_intf; 
+      wishbone_interface   wb_intf;
+      pkt_interface        pkt_intf; 
+      
+      reset_sequence       reset_seq; 
+      wb_sequence          wb_seq; 
+      tx_sequence          tx_seq; 
+      
+
+      environment       envil;
         //create seq handles
 
     function new(input string name, input name parent);
@@ -18,13 +28,19 @@ class test_base extends uvm_test;
         super.build_phase(phase);
         envil = env::type_id::create("envil",this);
         // here also you can connect the virtual interface to the original interface
+        uvm_config_db#(virtual reset_interface)    ::set (this, envil.reset_agt.rst_drv, "pkt_vi", reset_intf);
+        uvm_config_db#(virtual wishbone_interface) ::set (this, envil.reset_agt.rst_drv, "wb_vi", wb_intf);
+        uvm_config_db#(virtual pkt_interface)      ::set (this, envil.tx_agt.tx_drv, "pkt_vi", pkt_intf);
+        uvm_config_db#(virtual wishbone_interface) ::set (this, envil.wb_agt._drv, "wb_vi", wb_intf);
      endfunction
 
      virtual task main_phase(input uvm_phase phase);
         super.main_phase(phase);
         phase.raise_objection(this);
         //this part needs to be done
-            //seq.start
+         seq.start(envil.reset_agt.rst_drv);
+         seq.start(envil.tx_agt.tx_drv);
+         seq.start(envil.wb_agt._drv);
         phase.drop_objection(this);
 
      endtask

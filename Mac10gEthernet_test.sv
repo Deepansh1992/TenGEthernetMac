@@ -1,45 +1,51 @@
-module Mac10gEthernet_test();
+program Mac10gEthernet_test();
  
-reg           clk_156m25;
-reg           clk_312m50;
-reg           clk_xgmii_rx;
-reg           clk_xgmii_tx;
+// reg           clk_156m25;
+// reg           clk_312m50;
+// reg           clk_xgmii_rx;
+// reg           clk_xgmii_tx;
 
-reg           reset_156m25_n;
-reg           reset_xgmii_rx_n;
-reg           reset_xgmii_tx_n;
+// reg           reset_156m25_n;
+// reg           reset_xgmii_rx_n;
+// reg           reset_xgmii_tx_n;
 
-reg           pkt_rx_ren;
+// reg           pkt_rx_ren;
 
-reg  [63:0]   pkt_tx_data;
-reg           pkt_tx_val;
-reg           pkt_tx_sop;
-reg           pkt_tx_eop;
-reg  [2:0]    pkt_tx_mod;
+// reg  [63:0]   pkt_tx_data;
+// reg           pkt_tx_val;
+// reg           pkt_tx_sop;
+// reg           pkt_tx_eop;
+// reg  [2:0]    pkt_tx_mod;
 
-integer       tx_count;
-integer       rx_count;
+// integer       tx_count;
+// integer       rx_count;
 
-wire                    pkt_rx_avail;   
-wire [63:0]             pkt_rx_data;    
-wire                    pkt_rx_eop;     
-wire                    pkt_rx_err;     
-wire [2:0]              pkt_rx_mod;     
-wire                    pkt_rx_sop;     
-wire                    pkt_rx_val;     
-wire                    pkt_tx_full;    
-wire                    wb_ack_o;       
-wire [31:0]             wb_dat_o;       
-wire                    wb_int_o;       
-wire [7:0]              xgmii_txc;      
-wire [63:0]             xgmii_txd;      
+// wire                    pkt_rx_avail;   
+// wire [63:0]             pkt_rx_data;    
+// wire                    pkt_rx_eop;     
+// wire                    pkt_rx_err;     
+// wire [2:0]              pkt_rx_mod;     
+// wire                    pkt_rx_sop;     
+// wire                    pkt_rx_val;     
+// wire                    pkt_tx_full;    
+// wire                    wb_ack_o;       
+// wire [31:0]             wb_dat_o;       
+// wire                    wb_int_o;       
+// wire [7:0]              xgmii_txc;      
+// wire [63:0]             xgmii_txd;      
+
+    import uvm_pkg::*;
+ 
+    initial begin
+       run_test();
+    end
 
     // Clock Generators 
     initial begin 
         wb_clk_i = 'd0; 
         forever begin 
             WaitPS(10000); 
-            wb_clk_i = ~ wb_clk_i; 
+            wb_clk_i = ~ wb_clk_i; // 100 Mhz 
         end
     end
     
@@ -118,5 +124,4 @@ wire [63:0]             xgmii_txd;
 
 
 
-endmodule
-
+endprogram
