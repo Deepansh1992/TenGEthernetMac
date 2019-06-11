@@ -11,15 +11,15 @@ class tx_driver extends uvm_driver #(reset_sequence_item);
     virtual function void build_phase(input uvm_phase phase); 
         `uvm_info("tx_driver", "HIERARCHY:%m", UVM_HIGH);
         super.build_phase (phase); 
-        uvm_config_db#(virtual pkt_interface)::get(this, "", "pck_if", pkt_vi);
+            uvm_config_db#(virtual pkt_interface)::get(this, "", "pck_if", pkt_vi);
     endfunction
     
     virtual task run_phase(input uvm_phase phase);
         `uvm_info("DRIVER CLASS", "HIERARCHY: %m", UVM_HIGH);
         forever begin
-            wait (pkt_vi.reset_156m25_n && pkt_vi.pkt_tx_full);
+            wait(pkt_vi.reset_156m25_n && pkt_vi.pkt_tx_full);
             seq_item_port.get_next_item(req); 
-            `uvm_info("DRIVER_CLASS run_phase()", req.sprint(), UVM_HIGH); 
+            `uvm_info(" TX DRIVER_CLASS run_phase()", req.sprint(), UVM_HIGH); 
             @(pkt_vi.clk_156m25) begin 
                 pkt_vi.pkt_tx_data  <= req.pkt_tx_data;
                 pkt_vi.pkt_tx_eop   <= req.pkt_tx_eop;
