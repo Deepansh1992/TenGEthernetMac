@@ -1,8 +1,5 @@
 module Mac10gEthernet_test();
-    bit clock; 
-    bit reset;
-    
-    
+ 
 reg           clk_156m25;
 reg           clk_312m50;
 reg           clk_xgmii_rx;
@@ -66,49 +63,58 @@ wire [63:0]             xgmii_txd;
         end
     end
 
-    wishbone_interface  wb_itf(wb_clk_i); 
-    xgmii_interface     xgmii_intf(clk_xgmii_rx, clk_xgmii_tx); 
-    pkt_interface       pkt_intf(clk_156m25); 
+    wishbone_interface  wb_itf      (wb_clk_i); 
+    xgmii_interface     xgmii_intf  (clk_xgmii_rx, clk_xgmii_tx); 
+    pkt_interface       pkt_intf    (clk_156m25); 
     
+    xge_mac dut( 
+                 .wb_clkI       (wb_clk_i)
+                ,.clk_156m25    (clk_156m25)
+                ,.clk_xgmii_rx  (clk_xgmii_rx)
+                ,.clk_xgmii_tx  (clk_xgmii_tx)
+                ,wb_itf
+                ,xgmii_intf
+                ,pkt_intf
+    );
 
-    xge_mac dut(/*AUTOINST*/
-            // Outputs
-            .pkt_rx_avail               (pkt_rx_avail      ),
-            .pkt_rx_data                (pkt_rx_data       ),
-            .pkt_rx_eop                 (pkt_rx_eop        ),
-            .pkt_rx_err                 (pkt_rx_err        ),
-            .pkt_rx_mod                 (pkt_rx_mod[2:0]   ),
-            .pkt_rx_sop                 (pkt_rx_sop        ),
-            .pkt_rx_val                 (pkt_rx_val        ),
-            .pkt_tx_full                (pkt_tx_full       ),
-            .wb_ack_o                   (wb_ack_o          ),
-            .wb_dat_o                   (wb_dat_o          ),
-            .wb_int_o                   (wb_int_o          ),
-            .xgmii_txc                  (xgmii_txc         ),
-            .xgmii_txd                  (xgmii_txd         ),
-            // Inputs
-            .clk_156m25                 (clk_156m25        ),
-            .clk_xgmii_rx               (clk_xgmii_rx      ),
-            .clk_xgmii_tx               (clk_xgmii_tx      ),
-            .pkt_rx_ren                 (pkt_rx_ren        ),
-            .pkt_tx_data                (pkt_tx_data       ),
-            .pkt_tx_eop                 (pkt_tx_eop        ),
-            .pkt_tx_mod                 (pkt_tx_mod        ),
-            .pkt_tx_sop                 (pkt_tx_sop        ),
-            .pkt_tx_val                 (pkt_tx_val        ),
-            .reset_156m25_n             (reset_156m25_n    ),
-            .reset_xgmii_rx_n           (reset_xgmii_rx_n  ),
-            .reset_xgmii_tx_n           (reset_xgmii_tx_n  ),
-            .wb_adr_i                   (wb_adr_i          ),
-            .wb_clk_i                   (wb_clk_i          ),
-            .wb_cyc_i                   (wb_cyc_i          ),
-            .wb_dat_i                   (wb_dat_i          ),
-            .wb_rst_i                   (wb_rst_i          ),
-            .wb_stb_i                   (wb_stb_i          ),
-            .wb_we_i                    (wb_we_i           ),
-            .xgmii_rxc                  (xgmii_rxc         ),
-            .xgmii_rxd                  (xgmii_rxd         )
-            );
+    // xge_mac dut(/*AUTOINST*/
+    //         // Outputs
+    //         .pkt_rx_avail               (pkt_rx_avail      ),
+    //         .pkt_rx_data                (pkt_rx_data       ),
+    //         .pkt_rx_eop                 (pkt_rx_eop        ),
+    //         .pkt_rx_err                 (pkt_rx_err        ),
+    //         .pkt_rx_mod                 (pkt_rx_mod[2:0]   ),
+    //         .pkt_rx_sop                 (pkt_rx_sop        ),
+    //         .pkt_rx_val                 (pkt_rx_val        ),
+    //         .pkt_tx_full                (pkt_tx_full       ),
+    //         .wb_ack_o                   (wb_ack_o          ),
+    //         .wb_dat_o                   (wb_dat_o          ),
+    //         .wb_int_o                   (wb_int_o          ),
+    //         .xgmii_txc                  (xgmii_txc         ),
+    //         .xgmii_txd                  (xgmii_txd         ),
+    //         // Inputs
+    //         .clk_156m25                 (clk_156m25        ),
+    //         .clk_xgmii_rx               (clk_xgmii_rx      ),
+    //         .clk_xgmii_tx               (clk_xgmii_tx      ),
+    //         .pkt_rx_ren                 (pkt_rx_ren        ),
+    //         .pkt_tx_data                (pkt_tx_data       ),
+    //         .pkt_tx_eop                 (pkt_tx_eop        ),
+    //         .pkt_tx_mod                 (pkt_tx_mod        ),
+    //         .pkt_tx_sop                 (pkt_tx_sop        ),
+    //         .pkt_tx_val                 (pkt_tx_val        ),
+    //         .reset_156m25_n             (reset_156m25_n    ),
+    //         .reset_xgmii_rx_n           (reset_xgmii_rx_n  ),
+    //         .reset_xgmii_tx_n           (reset_xgmii_tx_n  ),
+    //         .wb_adr_i                   (wb_adr_i          ),
+    //         .wb_clk_i                   (wb_clk_i          ),
+    //         .wb_cyc_i                   (wb_cyc_i          ),
+    //         .wb_dat_i                   (wb_dat_i          ),
+    //         .wb_rst_i                   (wb_rst_i          ),
+    //         .wb_stb_i                   (wb_stb_i          ),
+    //         .wb_we_i                    (wb_we_i           ),
+    //         .xgmii_rxc                  (xgmii_rxc         ),
+    //         .xgmii_rxd                  (xgmii_rxd         )
+    //         );
 
 
 
