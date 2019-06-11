@@ -26,10 +26,20 @@ class rx_monitor extends uvm_monitor;
         `uvm_info(get_name(), $sformatf("%m"), UVM_HIGH);
         
         forever begin
-            @(posedge pkt_vif.clk_156m25);
-            //drive signals over here
-
-            mon_ap.write(pkt_id);
+            if(pkt_vif.pkt_rx_val) begin
+                @(posedge pkt_vif.clk_156m25) begin
+                    //drive signals over here
+                    pkt_id.pkt_rx_avail  =  pkt_vif.pkt_rx_avail;
+                    pkt_id.pkt_rx_data   =  pkt_vif.pkt_rx_data;  
+                    pkt_id.pkt_rx_eop    =  pkt_vif.pkt_rx_eop;    
+                    pkt_id.pkt_rx_err    =  pkt_vif.pkt_rx_err;    
+                    pkt_id.pkt_rx_mod    =  pkt_vif.pkt_rx_mod;    
+                    pkt_id.pkt_rx_sop    =  pkt_vif.pkt_rx_sop;    
+                    pkt_id.pkt_rx_val    =  pkt_vif.pkt_rx_val;    
+                    pkt_id.pkt_tx_full   =  pkt_vif.pkt_tx_full;             
+                end
+                mon_ap.write(pkt_id);
+            end
         end
 
     endtask: run_phase
