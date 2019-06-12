@@ -1,5 +1,11 @@
+
+`include	"../../pkt_interface.sv"	
+`include	"../../wishbone_interface.sv"	
+`include	"../../xgmii_interface.sv"	
+
 module Mac10gEthernet_test();
- 
+//clock registers
+reg     	  wb_clk_i;   
 reg           clk_156m25;
 reg           clk_312m50;
 reg           clk_xgmii_rx;
@@ -32,7 +38,8 @@ wire                    wb_ack_o;
 wire [31:0]             wb_dat_o;       
 wire                    wb_int_o;       
 wire [7:0]              xgmii_txc;      
-wire [63:0]             xgmii_txd;      
+wire [63:0]             xgmii_txd;
+
 
     // Clock Generators 
     initial begin 
@@ -68,13 +75,13 @@ wire [63:0]             xgmii_txd;
     pkt_interface       pkt_intf    (clk_156m25); 
     
     xge_mac dut( 
-                 .wb_clkI       (wb_clk_i)
-                ,.clk_156m25    (clk_156m25)
-                ,.clk_xgmii_rx  (clk_xgmii_rx)
-                ,.clk_xgmii_tx  (clk_xgmii_tx)
-                ,wb_itf
-                ,xgmii_intf
-                ,pkt_intf
+                // .wb_clkI       (wb_clk_i)
+                //,.clk_156m25    (clk_156m25)
+                //,.clk_xgmii_rx  (clk_xgmii_rx)
+                //,.clk_xgmii_tx  (clk_xgmii_tx)
+                // .*(wb_itf.*)
+                //,.*(xgmii_intf.*)
+                //,.*(pkt_intf.*)
     );
 
     // xge_mac dut(/*AUTOINST*/
@@ -116,7 +123,12 @@ wire [63:0]             xgmii_txd;
     //         .xgmii_rxd                  (xgmii_rxd         )
     //         );
 
-
+task WaitPS;
+  input [31:0] delay;
+    begin
+        #(delay);
+    end
+endtask
 
 endmodule
 

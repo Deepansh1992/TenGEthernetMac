@@ -1,8 +1,7 @@
 //  Class: wb_sequence_item
 //
 class wb_sequence_item extends uvm_sequence_item;
-    typedef wb_sequence_item this_type_t;
-    `uvm_object_utils(wb_sequence_item);
+    `uvm_object_utils(wb_sequence_item)
 
     //  Group: Variables
     rand bit [7:0]             wb_adr_i;               // To wishbone_if0 of wishbone_if.v
@@ -12,11 +11,11 @@ class wb_sequence_item extends uvm_sequence_item;
     rand bit                   wb_we_i;                // To wishbone_if0 of wishbone_if.v
     
     `uvm_object_utils_begin
-        `uvm_field_array_int    (wb_adr_i, UVM_ALL_ON);            
-        `uvm_field_int          (wb_cyc_i, UVM_ALL_ON);            
-        `uvm_field_array_int    (wb_dat_i, UVM_ALL_ON);            
-        `uvm_field_int          (wb_stb_i, UVM_ALL_ON);            
-        `uvm_field_int          (wb_we_i, UVM_ALL_ON);                  
+        `uvm_field_array_int    (wb_adr_i, UVM_ALL_ON)            
+        `uvm_field_int          (wb_cyc_i, UVM_ALL_ON)            
+        `uvm_field_array_int    (wb_dat_i, UVM_ALL_ON)            
+        `uvm_field_int          (wb_stb_i, UVM_ALL_ON)            
+        `uvm_field_int          (wb_we_i, UVM_ALL_ON)                  
     `uvm_object_utils_end
     
     function new(string name = "wb_sequence_item");

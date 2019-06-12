@@ -1,5 +1,28 @@
 `ifndef TESTCLASS_SV
 `define TESTCLASS_SV
+//`include "package.sv"
+//import Macpackage::*; 
+
+	`include "../TenGEthernetMac/reset_sequence_item.sv"
+	`include "../TenGEthernetMac/wb_sequence_item.sv"
+	`include "../TenGEthernetMac/tx_sequence_item.sv"
+	`include "../TenGEthernetMac/rx_sequence_item.sv"
+	`include "../TenGEthernetMac/reset_sequence.sv"
+	`include "../TenGEthernetMac/wb_sequence.sv"
+	`include "../TenGEthernetMac/tx_sequence.sv"
+	`include "../TenGEthernetMac/rx_sequence.sv"
+	`include "../TenGEthernetMac/reset_driver.sv"
+	`include "../TenGEthernetMac/wb_driver.sv"
+	`include "../TenGEthernetMac/tx_driver.sv"
+	`include "../TenGEthernetMac/rx_driver.sv"
+	`include "../TenGEthernetMac/reset_agent.sv"
+	`include "../TenGEthernetMac/wb_agent.sv"
+	`include "../TenGEthernetMac/tx_agent.sv"
+	`include "../TenGEthernetMac/rx_agent.sv"
+	`include "../TenGEthernetMac/rx_monitor.sv"
+	`include "../TenGEthernetMac/tx_monitor.sv"
+	`include "../TenGEthernetMac/environment.sv"
+	
 class test_base extends uvm_test;
         environment    envil;
         //create seq handles
