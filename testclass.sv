@@ -1,46 +1,62 @@
 `ifndef TESTCLASS_SV
 `define TESTCLASS_SV
-//`include "package.sv"
-//import Macpackage::*; 
 
-	`include "../TenGEthernetMac/reset_sequence_item.sv"
-	`include "../TenGEthernetMac/wb_sequence_item.sv"
-	`include "../TenGEthernetMac/tx_sequence_item.sv"
-	`include "../TenGEthernetMac/rx_sequence_item.sv"
-	`include "../TenGEthernetMac/reset_sequence.sv"
-	`include "../TenGEthernetMac/wb_sequence.sv"
-	`include "../TenGEthernetMac/tx_sequence.sv"
-	`include "../TenGEthernetMac/rx_sequence.sv"
-	`include "../TenGEthernetMac/reset_driver.sv"
-	`include "../TenGEthernetMac/wb_driver.sv"
-	`include "../TenGEthernetMac/tx_driver.sv"
-	`include "../TenGEthernetMac/rx_driver.sv"
-	`include "../TenGEthernetMac/reset_agent.sv"
-	`include "../TenGEthernetMac/wb_agent.sv"
-	`include "../TenGEthernetMac/tx_agent.sv"
-	`include "../TenGEthernetMac/rx_agent.sv"
-	`include "../TenGEthernetMac/rx_monitor.sv"
-	`include "../TenGEthernetMac/tx_monitor.sv"
-	`include "../TenGEthernetMac/environment.sv"
+// `include "reset_sequence_item.sv"
+// `include "wb_sequence_item.sv"
+// `include "tx_sequence_item.sv"
+
+//need
+`include "reset_sequence.sv"
+`include "wb_sequence.sv"
+`include "tx_sequence.sv"
+
+
+// `include "reset_driver.sv"
+// `include "wb_driver.sv"
+// `include "tx_driver.sv"
+// `include "rx_driver.sv"
+// `include "tx_monitor.sv"
+// `include "rx_monitor.sv"
+// `include "reset_agent.sv"
+// `include "wb_agent.sv"
+// `include "tx_agent.sv"
+// `include "rx_agent.sv"
+
+
+//need
+`include "environment.sv"
 	
 class test_base extends uvm_test;
+   `uvm_component_utils(test_base)
+   
         environment    envil;
-        //create seq handles
+      //   //create seq handles
+        reset_sequence  rst_seq;
+        wb_sequence     wb_seq;
+        tx_sequence     tx_seq; 
 
-    function new(input string name, input name parent);
-        super.new(name,parent);
-     endfunction
+
+        function new(input string name, input uvm_component parent);
+         super.new(name, parent);
+     endfunction : new
      
      virtual function void end_of_elaboration_phase(input uvm_phase phase);
         super.end_of_elaboration_phase(phase);
-        uvm_top.print_topology();
-        factory.print();
+      //   uvm_top.print_topology();
+      //   factory.print();
      endfunction
      
      virtual function void build_phase(input uvm_phase phase);
-        super.build_phase(phase);
-        envil = env::type_id::create("envil",this);
-        // here also you can connect the virtual interface to the original interface
+      super.build_phase(phase);
+        envil = environment::type_id::create("envil",this);
+
+   //    //   connect the virtual interface to the original interface
+      uvm_config_db#(virtual pkt_interface)::set(this, envil.tx_agt.tx_drv, "pkt_vi", Mac10gEthernet_test.pkt_vi);
+      uvm_config_db#(virtual pkt_interface)::set(this, envil.tx_agt.tx_mon, "pkt_vi", Mac10gEthernet_test.pkt_vi);
+      // uvm_config_db#(virtual pkt_interface)::set(this, envil.rx_agt.rx_mon, "pkt_vi", Mac10gEthernet_test.pkt_vi);
+      uvm_config_db#(virtual pkt_interface)::set(this, envil.reset_agt.rst_drv, "pkt_vi", Mac10gEthernet_test.pkt_vi);
+      // uvm_config_db#(virtual wishbone_interface)::set(this, envil.wb_agt.wb_drv, "wb_vi", Mac10gEthernet_test.wb_vi);
+      uvm_config_db#(virtual wishbone_interface)::set(this, envil.reset_agt.rst_drv, "wb_vi", Mac10gEthernet_test.wb_vi);
      endfunction
 
      virtual task main_phase(input uvm_phase phase);
@@ -53,8 +69,13 @@ class test_base extends uvm_test;
      endtask
      
      virtual task run_phase(input uvm_phase phase);
-        `uvm_info("test_base", "Hello .. I am doing my first UVM INFO", UVM_HIGH)
-        seq=user_sequence::type_id::create("seq",this);
+        `uvm_info("test_base", $sformatf("%m"), UVM_HIGH)
+
+        rst_seq   =  reset_sequence::type_id::create("rst_seq",this);
+        wb_seq    =  wb_sequence::type_id::create("wb_seq",this);
+        tx_seq    =  tx_sequence::type_id::create("tx_seq",this);
+        //   rx_seq   =  rx_sequence::type_id::create("rx_seq",this);
+      
         `uvm_info("test_base",$sformat("%m"), UVM_HIGH)
      endtask
 endclass //test_base

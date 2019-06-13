@@ -1,11 +1,25 @@
+`ifndef TESTCASE__SV
+`define TESTCASE__SV
+
+
+
 program testcase();
 
-   import uvm_pkg::*;
 
-   `include "testclass.sv"
+  import uvm_pkg::*;
 
-   initial begin
-     uvm_top.run_test();
-   end
-endprogram
+  `include "testclass.sv"
+
+  initial begin
+    $display("********************************************************before runtest"); 
+
+        run_test("");
+
+    $display("*********************************************************after run test"); 
+
+  end
+
+endprogram : testcase
+
+`endif
 

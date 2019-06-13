@@ -1,18 +1,19 @@
 `ifndef RESET_DRIVER
 `define RESET_DRIVER
+
 class reset_driver extends uvm_driver #(reset_sequence_item);
-    `uvm_component_utils(reset_driver);
+    `uvm_component_utils(reset_driver)
     virtual pkt_interface       pkt_vi; 
     virtual wishbone_interface  wb_vi; 
     
-    function new (input string name = "reset_driver" input uvm_component parent);
+    function new (input string name = "reset_driver", input uvm_component parent);
         super.new(name, parent);
     endfunction 
 
     virtual function void build_phase(input uvm_phase phase); 
         `uvm_info("RESET_DRIVER", "HIERARCHY:%m", UVM_HIGH);
         super.build_phase (phase); 
-        uvm_config_db#(virtual pkt_interface)::get(this, "", "pck_if", pkt_vi);
+        uvm_config_db#(virtual pkt_interface)::get(this, "", "pkt_vi", pkt_vi);
     endfunction
     
     virtual task run_phase(input uvm_phase phase);

@@ -1,8 +1,8 @@
 //  Class: reset_sequence_item
 //
 class reset_sequence_item extends uvm_sequence_item;
-    typedef reset_sequence_item this_type_t;
-    `uvm_object_utils(reset_sequence_item);
+
+    `uvm_object_utils(reset_sequence_item)
 
     //  Group: Variables
     bit wb_rst_i;           
@@ -15,6 +15,7 @@ class reset_sequence_item extends uvm_sequence_item;
     //  Constructor: new
     function new(string name = "reset_sequence_item");
         super.new(name);
+        `uvm_info(get_name(), $sformatf("%m"), UVM_MEDIUM);
     endfunction: new
 
     //  Function: do_copy
