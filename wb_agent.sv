@@ -18,11 +18,13 @@ class wb_agent extends uvm_agent;
         super.build_phase(phase);
         wb_sqr = wb_sequencer::type_id::create("wb_sqr", this);
         wb_drv = wb_driver::type_id::create("wb_drv", this);
-   endfunction
+    endfunction
 
     virtual function void connect_phase (uvm_phase phase);
-        if (get_is_active())
+        super.connect_phase(phase);
+        if (get_is_active()) begin 
             wb_drv.seq_item_port.connect (wb_sqr.seq_item_export);
+        end
     endfunction
 endclass
 `endif

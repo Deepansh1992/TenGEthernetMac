@@ -1,6 +1,7 @@
 //  Class: wb_sequence_item
 //
 class wb_sequence_item extends uvm_sequence_item;
+    `uvm_object_utils(wb_sequence_item)
 
     //  Group: Variables
     rand bit [7:0]             wb_adr_i;               // To wishbone_if0 of wishbone_if.v

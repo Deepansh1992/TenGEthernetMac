@@ -1,13 +1,13 @@
 `ifndef ENV_SV
 `define ENV_SV
 	`include "reset_agent.sv"
-	// `include "wb_agent.sv"
+	`include "wb_agent.sv"
 	`include "tx_agent.sv"
 	`include "rx_agent.sv" 
 
 class environment extends uvm_env;
     `uvm_component_utils(environment)
-    // wb_agent        wb_agt;
+    wb_agent        wb_agt;
     reset_agent     reset_agt;
     rx_agent        rx_agt;
     tx_agent        tx_agt;
@@ -19,7 +19,7 @@ class environment extends uvm_env;
 
     virtual function void build_phase(input uvm_phase phase);
         super.build_phase(phase);
-        // wb_agt      = wb_agent::type_id::create("wb_agt",this);
+        wb_agt      = wb_agent::type_id::create("wb_agt",this);
         reset_agt   = reset_agent::type_id::create("reset_agt",this);
         rx_agt      = rx_agent::type_id::create("rx_agt",this);
         tx_agt      = tx_agent::type_id::create("tx_agt",this);

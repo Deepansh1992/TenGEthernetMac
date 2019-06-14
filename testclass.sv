@@ -1,44 +1,23 @@
 `ifndef TESTCLASS_SV
 `define TESTCLASS_SV
 
-// `include "reset_sequence_item.sv"
-// `include "wb_sequence_item.sv"
-// `include "tx_sequence_item.sv"
-
-//need
 `include "reset_sequence.sv"
 `include "wb_sequence.sv"
 `include "tx_sequence.sv"
-
-
-// `include "reset_driver.sv"
-// `include "wb_driver.sv"
-// `include "tx_driver.sv"
-// `include "rx_driver.sv"
-// `include "tx_monitor.sv"
-// `include "rx_monitor.sv"
-// `include "reset_agent.sv"
-// `include "wb_agent.sv"
-// `include "tx_agent.sv"
-// `include "rx_agent.sv"
-
-
-//need
 `include "environment.sv"
 	
 class test_base extends uvm_test;
    `uvm_component_utils(test_base)
    
-        environment    envil;
-      //   //create seq handles
-        reset_sequence  rst_seq;
-        wb_sequence     wb_seq;
-        tx_sequence     tx_seq; 
+    environment    envil;
+    reset_sequence  rst_seq;
+    wb_sequence     wb_seq;
+    tx_sequence     tx_seq; 
 
 
-        function new(input string name, input uvm_component parent);
+    function new(input string name, input uvm_component parent);
          super.new(name, parent);
-     endfunction : new
+    endfunction : new
      
      virtual function void end_of_elaboration_phase(input uvm_phase phase);
         super.end_of_elaboration_phase(phase);
@@ -51,12 +30,12 @@ class test_base extends uvm_test;
         envil = environment::type_id::create("envil",this);
 
    //    //   connect the virtual interface to the original interface
-      uvm_config_db#(virtual pkt_interface)::set(this, envil.tx_agt.tx_drv, "pkt_vi", Mac10gEthernet_test.pkt_vi);
-      uvm_config_db#(virtual pkt_interface)::set(this, envil.tx_agt.tx_mon, "pkt_vi", Mac10gEthernet_test.pkt_vi);
+      uvm_config_db#(virtual pkt_interface)::set(this, envil.tx_agt.tx_drv, "pkt_vi", Mac10gEthernet_test.pkt_intf);
+      uvm_config_db#(virtual pkt_interface)::set(this, envil.tx_agt.tx_mon, "pkt_vi", Mac10gEthernet_test.pkt_intf);
       // uvm_config_db#(virtual pkt_interface)::set(this, envil.rx_agt.rx_mon, "pkt_vi", Mac10gEthernet_test.pkt_vi);
-      uvm_config_db#(virtual pkt_interface)::set(this, envil.reset_agt.rst_drv, "pkt_vi", Mac10gEthernet_test.pkt_vi);
-      // uvm_config_db#(virtual wishbone_interface)::set(this, envil.wb_agt.wb_drv, "wb_vi", Mac10gEthernet_test.wb_vi);
-      uvm_config_db#(virtual wishbone_interface)::set(this, envil.reset_agt.rst_drv, "wb_vi", Mac10gEthernet_test.wb_vi);
+      uvm_config_db#(virtual pkt_interface)::set(this, envil.reset_agt.rst_drv, "pkt_vi", Mac10gEthernet_test.pkt_intf);
+      uvm_config_db#(virtual wishbone_interface)::set(this, envil.wb_agt.wb_drv, "wb_vi", Mac10gEthernet_test.wb_intf);
+      uvm_config_db#(virtual wishbone_interface)::set(this, envil.reset_agt.rst_drv, "wb_vi", Mac10gEthernet_test.wb_intf);
      endfunction
 
      virtual task main_phase(input uvm_phase phase);
@@ -76,7 +55,7 @@ class test_base extends uvm_test;
         tx_seq    =  tx_sequence::type_id::create("tx_seq",this);
         //   rx_seq   =  rx_sequence::type_id::create("rx_seq",this);
       
-        `uvm_info("test_base",$sformat("%m"), UVM_HIGH)
+        `uvm_info("test_base",$sformatf("%m"), UVM_HIGH)
      endtask
 endclass //test_base
 `endif 

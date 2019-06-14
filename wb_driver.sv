@@ -2,16 +2,18 @@
 `define WB_DRIVER
 class wb_driver extends uvm_driver #(wb_sequence_item);
     `uvm_component_utils(wb_driver)
-    virtual wb_interface wb_vi; 
+
+    virtual wishbone_interface wb_vi; 
     
     function new (input string name = "wb_driver", input uvm_component parent);
         super.new(name, parent);
     endfunction 
 
     virtual function void build_phase(input uvm_phase phase); 
+        super.build_phase(phase);
         `uvm_info("wb_driver", "HIERARCHY:%m", UVM_HIGH);
         super.build_phase (phase); 
-        uvm_config_db#(virtual wb_interface)::get(this, "", "wb_vi", wb_vi);
+        uvm_config_db#(virtual wishbone_interface)::get(this, "", "wb_vi", wb_vi);
     endfunction
     
     virtual task run_phase(input uvm_phase phase);
@@ -37,5 +39,6 @@ class wb_driver extends uvm_driver #(wb_sequence_item);
                 wb_vi.wb_we_i   =   1'd0        ;    
             end 
         end
-     endtask
+    endtask
+endclass
 `endif

@@ -70,7 +70,7 @@ wire [63:0]             xgmii_txd;
         end
     end
 
-    wishbone_interface  wb_itf      (wb_clk_i); 
+    wishbone_interface  wb_intf      (wb_clk_i); 
     xgmii_interface     xgmii_intf  (clk_xgmii_rx, clk_xgmii_tx); 
     pkt_interface       pkt_intf    (clk_156m25); 
 
