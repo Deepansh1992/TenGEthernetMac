@@ -2,7 +2,7 @@
 //
 
 class tx_sequence_item extends uvm_sequence_item;
-    
+    `uvm_object_utils(tx_sequence_item)
     //  Group: Variables
     
     rand bit [63:0]     pkt_tx_data;   // To tx_eq0 of tx_enqueue.v
@@ -34,7 +34,6 @@ class tx_sequence_item extends uvm_sequence_item;
     function new(string name = "tx_sequence_item");
         super.new(name);
         `uvm_info(get_name(), $sformatf("%m"), UVM_MEDIUM);
-        
     endfunction: new
 
     //  Function: do_copy

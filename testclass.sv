@@ -30,12 +30,12 @@ class test_base extends uvm_test;
         envil = environment::type_id::create("envil",this);
 
    //    //   connect the virtual interface to the original interface
-      uvm_config_db#(virtual pkt_interface)::set(this, envil.tx_agt.tx_drv, "pkt_vi", Mac10gEthernet_test.pkt_intf);
-      uvm_config_db#(virtual pkt_interface)::set(this, envil.tx_agt.tx_mon, "pkt_vi", Mac10gEthernet_test.pkt_intf);
-      // uvm_config_db#(virtual pkt_interface)::set(this, envil.rx_agt.rx_mon, "pkt_vi", Mac10gEthernet_test.pkt_vi);
-      uvm_config_db#(virtual pkt_interface)::set(this, envil.reset_agt.rst_drv, "pkt_vi", Mac10gEthernet_test.pkt_intf);
-      uvm_config_db#(virtual wishbone_interface)::set(this, envil.wb_agt.wb_drv, "wb_vi", Mac10gEthernet_test.wb_intf);
-      uvm_config_db#(virtual wishbone_interface)::set(this, envil.reset_agt.rst_drv, "wb_vi", Mac10gEthernet_test.wb_intf);
+      uvm_config_db#(virtual pkt_interface)::set(this, "envil.tx_agt.tx_drv", "pkt_vi", Mac10gEthernet_test.pkt_intf);
+      uvm_config_db#(virtual pkt_interface)::set(this, "envil.tx_agt.tx_mon", "pkt_vi", Mac10gEthernet_test.pkt_intf);
+      // uvm_config_db#(virtual pkt_interface)::set(this, "envil.rx_agt.rx_mon", "pkt_vi", Mac10gEthernet_test.pkt_vi);
+      uvm_config_db#(virtual pkt_interface)::set(this, "envil.reset_agt.rst_drv", "pkt_vi", Mac10gEthernet_test.pkt_intf);
+      uvm_config_db#(virtual wishbone_interface)::set(this, "envil.wb_agt.wb_drv", "wb_vi", Mac10gEthernet_test.wb_intf);
+      uvm_config_db#(virtual wishbone_interface)::set(this, "envil.reset_agt.rst_drv", "wb_vi", Mac10gEthernet_test.wb_intf);
      endfunction
 
      virtual task main_phase(input uvm_phase phase);

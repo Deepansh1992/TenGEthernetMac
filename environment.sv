@@ -1,9 +1,9 @@
 `ifndef ENV_SV
 `define ENV_SV
-	`include "reset_agent.sv"
-	`include "wb_agent.sv"
-	`include "tx_agent.sv"
-	`include "rx_agent.sv" 
+`include "reset_agent.sv"
+`include "wb_agent.sv"
+`include "tx_agent.sv"
+`include "rx_agent.sv" 
 
 class environment extends uvm_env;
     `uvm_component_utils(environment)
