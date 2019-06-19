@@ -20,25 +20,20 @@ program Mac10gEthernet_test();
 // integer       tx_count;
 // integer       rx_count;
 
-// wire                    pkt_rx_avail;   
-// wire [63:0]             pkt_rx_data;    
-// wire                    pkt_rx_eop;     
-// wire                    pkt_rx_err;     
-// wire [2:0]              pkt_rx_mod;     
-// wire                    pkt_rx_sop;     
-// wire                    pkt_rx_val;     
-// wire                    pkt_tx_full;    
-// wire                    wb_ack_o;       
-// wire [31:0]             wb_dat_o;       
-// wire                    wb_int_o;       
-// wire [7:0]              xgmii_txc;      
-// wire [63:0]             xgmii_txd;      
+wire                    pkt_rx_avail;   
+wire [63:0]             pkt_rx_data;    
+wire                    pkt_rx_eop;     
+wire                    pkt_rx_err;     
+wire [2:0]              pkt_rx_mod;     
+wire                    pkt_rx_sop;     
+wire                    pkt_rx_val;     
+wire                    pkt_tx_full;    
+wire                    wb_ack_o;       
+wire [31:0]             wb_dat_o;       
+wire                    wb_int_o;       
+wire [7:0]              xgmii_txc;      
+wire [63:0]             xgmii_txd;
 
-    import uvm_pkg::*;
- 
-    initial begin
-       run_test();
-    end
 
     // Clock Generators 
     initial begin 
@@ -69,59 +64,54 @@ program Mac10gEthernet_test();
         end
     end
 
-    wishbone_interface  wb_itf      (wb_clk_i); 
+    wishbone_interface  wb_intf      (wb_clk_i); 
     xgmii_interface     xgmii_intf  (clk_xgmii_rx, clk_xgmii_tx); 
     pkt_interface       pkt_intf    (clk_156m25); 
-    
-    xge_mac dut( 
-                 .wb_clkI       (wb_clk_i)
-                ,.clk_156m25    (clk_156m25)
-                ,.clk_xgmii_rx  (clk_xgmii_rx)
-                ,.clk_xgmii_tx  (clk_xgmii_tx)
-                ,wb_itf
-                ,xgmii_intf
-                ,pkt_intf
-    );
 
-    // xge_mac dut(/*AUTOINST*/
-    //         // Outputs
-    //         .pkt_rx_avail               (pkt_rx_avail      ),
-    //         .pkt_rx_data                (pkt_rx_data       ),
-    //         .pkt_rx_eop                 (pkt_rx_eop        ),
-    //         .pkt_rx_err                 (pkt_rx_err        ),
-    //         .pkt_rx_mod                 (pkt_rx_mod[2:0]   ),
-    //         .pkt_rx_sop                 (pkt_rx_sop        ),
-    //         .pkt_rx_val                 (pkt_rx_val        ),
-    //         .pkt_tx_full                (pkt_tx_full       ),
-    //         .wb_ack_o                   (wb_ack_o          ),
-    //         .wb_dat_o                   (wb_dat_o          ),
-    //         .wb_int_o                   (wb_int_o          ),
-    //         .xgmii_txc                  (xgmii_txc         ),
-    //         .xgmii_txd                  (xgmii_txd         ),
-    //         // Inputs
-    //         .clk_156m25                 (clk_156m25        ),
-    //         .clk_xgmii_rx               (clk_xgmii_rx      ),
-    //         .clk_xgmii_tx               (clk_xgmii_tx      ),
-    //         .pkt_rx_ren                 (pkt_rx_ren        ),
-    //         .pkt_tx_data                (pkt_tx_data       ),
-    //         .pkt_tx_eop                 (pkt_tx_eop        ),
-    //         .pkt_tx_mod                 (pkt_tx_mod        ),
-    //         .pkt_tx_sop                 (pkt_tx_sop        ),
-    //         .pkt_tx_val                 (pkt_tx_val        ),
-    //         .reset_156m25_n             (reset_156m25_n    ),
-    //         .reset_xgmii_rx_n           (reset_xgmii_rx_n  ),
-    //         .reset_xgmii_tx_n           (reset_xgmii_tx_n  ),
-    //         .wb_adr_i                   (wb_adr_i          ),
-    //         .wb_clk_i                   (wb_clk_i          ),
-    //         .wb_cyc_i                   (wb_cyc_i          ),
-    //         .wb_dat_i                   (wb_dat_i          ),
-    //         .wb_rst_i                   (wb_rst_i          ),
-    //         .wb_stb_i                   (wb_stb_i          ),
-    //         .wb_we_i                    (wb_we_i           ),
-    //         .xgmii_rxc                  (xgmii_rxc         ),
-    //         .xgmii_rxd                  (xgmii_rxd         )
-    //         );
+    xge_mac dut(/*AUTOINST*/
+            // Outputs
+            .pkt_rx_avail               (pkt_intf.pkt_rx_avail      ),
+            .pkt_rx_data                (pkt_intf.pkt_rx_data       ),
+            .pkt_rx_eop                 (pkt_intf.pkt_rx_eop        ),
+            .pkt_rx_err                 (pkt_intf.pkt_rx_err        ),
+            .pkt_rx_mod                 (pkt_intf.pkt_rx_mod[2:0]   ),
+            .pkt_rx_sop                 (pkt_intf.pkt_rx_sop        ),
+            .pkt_rx_val                 (pkt_intf.pkt_rx_val        ),
+            .pkt_tx_full                (pkt_intf.pkt_tx_full       ),
+            .wb_ack_o                   (wb_intf.wb_ack_o           ),
+            .wb_dat_o                   (wb_intf.wb_dat_o           ),
+            .wb_int_o                   (wb_intf.wb_int_o           ),
+            .xgmii_txc                  (xgmii_intf.xgmii_txc       ),
+            .xgmii_txd                  (xgmii_intf.xgmii_txd       ),
+            // Inputs
+            .clk_156m25                 (clk_156m25                 ),
+            .clk_xgmii_rx               (clk_xgmii_rx               ),
+            .clk_xgmii_tx               (clk_xgmii_tx               ),
+            .pkt_rx_ren                 (pkt_intf.pkt_rx_ren        ),
+            .pkt_tx_data                (pkt_intf.pkt_tx_data       ),
+            .pkt_tx_eop                 (pkt_intf.pkt_tx_eop        ),
+            .pkt_tx_mod                 (pkt_intf.pkt_tx_mod        ),
+            .pkt_tx_sop                 (pkt_intf.pkt_tx_sop        ),
+            .pkt_tx_val                 (pkt_intf.pkt_tx_val        ),
+            .reset_156m25_n             (pkt_intf.reset_156m25_n    ),
+            .reset_xgmii_rx_n           (xgmii_intf.reset_xgmii_rx_n),
+            .reset_xgmii_tx_n           (xgmii_intf.reset_xgmii_tx_n),
+            .wb_adr_i                   (wb_intf.wb_adr_i           ),
+            .wb_clk_i                   (wb_clk_i                   ),
+            .wb_cyc_i                   (wb_intf.wb_cyc_i           ),
+            .wb_dat_i                   (wb_intf.wb_dat_i           ),
+            .wb_rst_i                   (wb_intf.wb_rst_i           ),
+            .wb_stb_i                   (wb_intf.wb_stb_i           ),
+            .wb_we_i                    (wb_intf.wb_we_i            ),
+            .xgmii_rxc                  (xgmii_intf.xgmii_rxc       ),
+            .xgmii_rxd                  (xgmii_intf.xgmii_rxd       )
+            );
 
-
+task WaitPS;
+  input [31:0] delay;
+    begin
+        #(delay);
+    end
+endtask
 
 endprogram

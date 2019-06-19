@@ -1,11 +1,12 @@
 `ifndef RESET_DRIVER
 `define RESET_DRIVER
+
 class reset_driver extends uvm_driver #(reset_sequence_item);
-    `uvm_component_utils(reset_driver);
+    `uvm_component_utils(reset_driver)
     virtual pkt_interface       pkt_vi; 
     virtual wishbone_interface  wb_vi; 
     
-    function new (input string name = "reset_driver" input uvm_component parent);
+    function new (input string name = "reset_driver", input uvm_component parent);
         super.new(name, parent);
     endfunction 
 
@@ -22,7 +23,7 @@ class reset_driver extends uvm_driver #(reset_sequence_item);
             seq_item_port.get_next_item(req);
                 `uvm_info("RESET_DRIVER run_phase()", req.sprint(), UVM_HIGH); 
                 @(pkt_vi.clk_156m25);           pkt_vi.reset_156m25_n       <=  req.reset_156m25_n; 
-                @(wb_clk_i.wb_vi);              wb_vi.wb_rst_i              <=  req.wb_rst_i;
+                @(wb_vi.wb_clk_i);              wb_vi.wb_rst_i              <=  req.wb_rst_i;
                 @(xgmii_interface.clk_xgmii_rx); xgmii_interface.reset_xgmii_rx_n    <= req.reset_xgmii_rx_n;
                 @(xgmii_interface.clk_xgmii_tx); xgmii_interface.reset_xgmii_tx_n    <= req.reset_xgmii_tx_n;
                 //givign an initial value to all the signals 

@@ -1,0 +1,15 @@
+rm -rf  *.log \
+	csrc \
+	simv* \
+	summary.log \
+	ucli.key \
+	vcdplus.vpd \
+	*DVE* \
+	*INCA* \
+	transcript \
+	work \
+	vc_hdrs.h \
+	coverage.log \
+	COVERAGE.vdb \
+	urgReport \
+	*.vpd

@@ -1,37 +1,41 @@
 `ifndef TESTCLASS_SV
 `define TESTCLASS_SV
+
+`include "reset_sequence.sv"
+`include "wb_sequence.sv"
+`include "tx_sequence.sv"
+`include "environment.sv"
+	
 class test_base extends uvm_test;
-      
-      reset_interface      reset_intf; 
-      wishbone_interface   wb_intf;
-      pkt_interface        pkt_intf; 
-      
-      reset_sequence       reset_seq; 
-      wb_sequence          wb_seq; 
-      tx_sequence          tx_seq; 
-      
+   `uvm_component_utils(test_base)
+   
+    environment    envil;
+    reset_sequence  rst_seq;
+    wb_sequence     wb_seq;
+    tx_sequence     tx_seq; 
 
-      environment       envil;
-        //create seq handles
 
-    function new(input string name, input name parent);
-        super.new(name,parent);
-     endfunction
+    function new(input string name, input uvm_component parent);
+         super.new(name, parent);
+    endfunction : new
      
      virtual function void end_of_elaboration_phase(input uvm_phase phase);
         super.end_of_elaboration_phase(phase);
-        uvm_top.print_topology();
-        factory.print();
+      //   uvm_top.print_topology();
+      //   factory.print();
      endfunction
      
      virtual function void build_phase(input uvm_phase phase);
-        super.build_phase(phase);
-        envil = env::type_id::create("envil",this);
-        // here also you can connect the virtual interface to the original interface
-        uvm_config_db#(virtual reset_interface)    ::set (this, envil.reset_agt.rst_drv, "pkt_vi", reset_intf);
-        uvm_config_db#(virtual wishbone_interface) ::set (this, envil.reset_agt.rst_drv, "wb_vi", wb_intf);
-        uvm_config_db#(virtual pkt_interface)      ::set (this, envil.tx_agt.tx_drv, "pkt_vi", pkt_intf);
-        uvm_config_db#(virtual wishbone_interface) ::set (this, envil.wb_agt._drv, "wb_vi", wb_intf);
+      super.build_phase(phase);
+        envil = environment::type_id::create("envil",this);
+
+   //    //   connect the virtual interface to the original interface
+      uvm_config_db#(virtual pkt_interface)::set(this, "envil.tx_agt.tx_drv", "pkt_vi", Mac10gEthernet_test.pkt_intf);
+      uvm_config_db#(virtual pkt_interface)::set(this, "envil.tx_agt.tx_mon", "pkt_vi", Mac10gEthernet_test.pkt_intf);
+      // uvm_config_db#(virtual pkt_interface)::set(this, "envil.rx_agt.rx_mon", "pkt_vi", Mac10gEthernet_test.pkt_vi);
+      uvm_config_db#(virtual pkt_interface)::set(this, "envil.reset_agt.rst_drv", "pkt_vi", Mac10gEthernet_test.pkt_intf);
+      uvm_config_db#(virtual wishbone_interface)::set(this, "envil.wb_agt.wb_drv", "wb_vi", Mac10gEthernet_test.wb_intf);
+      uvm_config_db#(virtual wishbone_interface)::set(this, "envil.reset_agt.rst_drv", "wb_vi", Mac10gEthernet_test.wb_intf);
      endfunction
 
      virtual task main_phase(input uvm_phase phase);
@@ -46,9 +50,14 @@ class test_base extends uvm_test;
      endtask
      
      virtual task run_phase(input uvm_phase phase);
-        `uvm_info("test_base", "Hello .. I am doing my first UVM INFO", UVM_HIGH)
-        seq=user_sequence::type_id::create("seq",this);
-        `uvm_info("test_base",$sformat("%m"), UVM_HIGH)
+        `uvm_info("test_base", $sformatf("%m"), UVM_HIGH)
+
+        rst_seq   =  reset_sequence::type_id::create("rst_seq",this);
+        wb_seq    =  wb_sequence::type_id::create("wb_seq",this);
+        tx_seq    =  tx_sequence::type_id::create("tx_seq",this);
+        //   rx_seq   =  rx_sequence::type_id::create("rx_seq",this);
+      
+        `uvm_info("test_base",$sformatf("%m"), UVM_HIGH)
      endtask
 endclass //test_base
 `endif 

@@ -2,6 +2,8 @@
 //
 class reset_sequence_item extends uvm_sequence_item;
 
+    `uvm_object_utils(reset_sequence_item)
+
     //  Group: Variables
     bit wb_rst_i;           
     bit reset_156m25_n;         
@@ -19,7 +21,7 @@ class reset_sequence_item extends uvm_sequence_item;
     //  Constructor: new
     function new(string name = "reset_sequence_item");
         super.new(name);
-        `uvm_info(get_name(), $sformatf("HEIRARCHY : %m"), UVM_HIGH);
+        `uvm_info(get_name(), $sformatf("%m"), UVM_MEDIUM);
     endfunction: new
 
     //  Function: do_copy

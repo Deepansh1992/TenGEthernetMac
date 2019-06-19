@@ -1,7 +1,7 @@
 //  Class: rx_sequence_item
 //
 class rx_sequence_item extends uvm_sequence_item;
-    `uvm_object_utils(rx_sequence_item);
+    `uvm_object_utils(rx_sequence_item)
 
     //  Group: Variables
     rand bit    pkt_rx_ren;             // To rx_dq0 of rx_dequeue.v

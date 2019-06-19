@@ -6,7 +6,8 @@ class rx_monitor extends uvm_monitor;
 
     virtual pkt_interface   pkt_vif;
 
-    uvm_analysis_port#(mon_pkt) mon_ap;
+    uvm_analysis_port #(tx_sequence_item) mon_ap;
+    // uvm_analysis_port  mon_ap;
 
     function new(input string name,input uvm_component parent);
         super.new(name, parent);
@@ -22,7 +23,8 @@ class rx_monitor extends uvm_monitor;
     endfunction
 
     virtual task run_phase( input uvm_phase phase);
-        mon_pkt pkt_id = mon_pkt::typeid::create("pkt_id",this);
+        tx_sequence_item pkt_id;
+        pkt_id = tx_sequence_item::type_id::create("pkt_id",this);
         `uvm_info(get_name(), $sformatf("%m"), UVM_HIGH);
         
         forever begin
@@ -44,3 +46,5 @@ class rx_monitor extends uvm_monitor;
 
     endtask: run_phase
 endclass
+
+`endif
