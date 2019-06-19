@@ -1,5 +1,7 @@
 //  Class: tx_sequence_item
 //
+`ifdef TX_SEQUENCE_ITEM
+`define TX_SEQUENCE_ITEM
 
 class tx_sequence_item extends uvm_sequence_item;
     `uvm_object_utils(tx_sequence_item)
@@ -20,36 +22,59 @@ class tx_sequence_item extends uvm_sequence_item;
     rand bit            pkt_rx_val  ; 
     rand bit            pkt_tx_full ; 
 
-    // `uvm_object_utils_begin(tx_sequence_item)
-    //     `uvm_field_array_int    (pkt_tx_data, UVM_ALL_ON)
-    //     `uvm_field_int          (pkt_tx_eop, UVM_ALL_ON)
-    //     `uvm_field_array_int    (pkt_tx_mod, UVM_ALL_ON)
-    //     `uvm_field_int          (pkt_tx_sop, UVM_ALL_ON)
-    //     `uvm_field_int          (pkt_tx_val, UVM_ALL_ON)
-    // `uvm_object_utils_end
-    
-    //  Group: Functions
+    `uvm_object_utils_begin(tx_sequence_item)
+        `uvm_field_array_int    (pkt_tx_data, UVM_ALL_ON)
+        `uvm_field_int          (pkt_tx_eop, UVM_ALL_ON)
+        `uvm_field_array_int    (pkt_tx_mod, UVM_ALL_ON)
+        `uvm_field_int          (pkt_tx_sop, UVM_ALL_ON)
+        `uvm_field_int          (pkt_tx_val, UVM_ALL_ON)
+    `uvm_object_utils_end
 
+ // constraints should be given here   
+ 
     //  Constructor: new
     function new(string name = "tx_sequence_item");
         super.new(name);
         `uvm_info(get_name(), $sformatf("%m"), UVM_MEDIUM);
     endfunction: new
 
-    //  Function: do_copy
-    // extern function void do_copy(uvm_object rhs);
-    //  Function: do_compare
-    // extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
-    //  Function: convert2string
-    // extern function string convert2string();
-    //  Function: do_print
-    // extern function void do_print(uvm_printer printer);
-    //  Function: do_record
-    // extern function void do_record(uvm_recorder recorder);
-    //  Function: do_pack
-    // extern function void do_pack();
-    //  Function: do_unpack
-    // extern function void do_unpack();
-
-
 endclass: tx_sequence_item
+
+
+class /*name of the class*/ extends tx_sequence_item;
+    `uvm_object_utils(/*name of the class*/)
+    constraint /*name*/
+    {
+
+    }
+
+    function new (input string name = ""  )
+        super.new(name);
+    endfunction : new
+endclass 
+
+class /*name of the class*/ extends tx_sequence_item;
+    `uvm_object_utils(/*name of the class*/)
+    constraint /*name*/
+    {
+
+    }
+
+    function new (input string name = ""  )
+        super.new(name);
+    endfunction : new
+endclass 
+
+class /*name of the class*/ extends tx_sequence_item;
+    `uvm_object_utils(/*name of the class*/)
+    constraint /*name*/
+    {
+
+    }
+
+    function new (input string name = ""  )
+        super.new(name);
+    endfunction : new
+endclass 
+
+`endif
