@@ -25,7 +25,16 @@ class tx_monitor extends uvm_monitor;
         `uvm_info("MONITOR CLASS run_phase()", "HEIRARCHY%m", UVM_HIGH);
 
         forever begin 
-            tx_mon_ap.write(tx_pkt); 
+            @(posedge pkt_vi.clk_156m251) begin 
+                tx_pkt.pkt_tx_data    = pkt_vi.pkt_tx_data       ; 
+                tx_pkt.pkt_tx_eop     = pkt_vi.pkt_tx_eop        ; 
+                tx_pkt.pkt_tx_mod     = pkt_vi.pkt_tx_mod        ; 
+                tx_pkt.pkt_tx_sop     = pkt_vi.pkt_tx_sop        ; 
+                tx_pkt.pkt_tx_val     = pkt_vi.pkt_tx_val        ; 
+                tx_pkt.reset_156m25_n = pkt_vi.reset_156m25_n    ; 
+                tx_pkt.pkt_tx_full    = pkt_vi.pkt_tx_full       ; 
+            end 
+                tx_mon_ap.write(tx_pkt);
         end
     endtask
 endclass
