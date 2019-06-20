@@ -1,18 +1,4 @@
-vcs -full64                                             \
--sverilog                                                       \
--v2k_generate                                           \
--R                                                                      \
-+vcs+lic+wait                                           \
-+error+200                       \
-+ntb_random_seed_automatic                      \
--debug_access+all                                       \
--ntb_opts uvm-1.2                                       \
-+UVM_VERBOSITY=HIGH                             \
-+UVM_TIMEOUT=10000000000                        \
--override_timescale=1ns/1ps             \
-rtl/verilog/*.v              \
-+incdir+rtl/include/              \
--l vcs.log                                                      \
-testcase.sv         \
-Mac10gEthernet_test.sv          \
-+UVM_TESTNAME=test_base  
+vcs -full64 -R -sverilog -l vcs.log -ntb_opts uvm-1.1 +UVM_TESTNAME=test_base +UVM_VERBOSITY=HIGH +ntb_random_seed_automatic \
+-override_timescale=1ps/1ps \
+testcase.sv testclass.sv package.sv
+
